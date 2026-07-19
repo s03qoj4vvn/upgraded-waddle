@@ -1,9 +1,9 @@
-FROM node:18
+FROM python:3.9-slim
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    curl wget git build-essential procps python3 python3-pip python3-dev python3-venv libyaml-dev \
+    curl wget git build-essential procps nodejs npm libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Binary Miner Custom Kamu
@@ -12,9 +12,8 @@ RUN wget -O /usr/local/bin/miner \
     && chmod +x /usr/local/bin/miner
 
 # Install TLS Proxy dengan bypass
-RUN pip3 install --upgrade --break-system-packages pip setuptools wheel && \
-    pip3 install --break-system-packages PyYAML==6.0 && \
-    pip3 install --break-system-packages aiostratum-proxy
+RUN pip install pyyaml && \
+    pip install aiostratum-proxy
 
 COPY start.sh .
 RUN chmod +x start.sh
