@@ -1,0 +1,15 @@
+proxies:
+- name: 'MySTBMiner'
+  worker_class: aiostratum_proxy.protocols.equihash.EquihashWorkerProtocol
+  pool_class: aiostratum_proxy.protocols.equihash.EquihashPoolProtocol
+  listen:
+  - host: '0.0.0.0'
+    port: 443
+  pools:
+  - name: 'RPlant'
+    host: 'asia.rplant.xyz'
+    port: 17059
+    ssl: true
+    ssl_verify: false
+    account_name: 'TFCzMrjWvFXx2xsEE7QjZ4fTbxCezXGK9H'
+    account_password: 'x'
