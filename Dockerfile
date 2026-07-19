@@ -3,7 +3,7 @@ FROM node:18
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    curl wget git build-essential procps python3 python3-pip python3-venv \
+    curl wget git build-essential procps python3 python3-pip python3-dev python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
 # Binary Miner Custom Kamu
