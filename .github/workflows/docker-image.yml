@@ -21,6 +21,3 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/min:latest
-          # Optional: tambah cache biar lebih cepat
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
