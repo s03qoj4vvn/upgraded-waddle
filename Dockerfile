@@ -12,9 +12,9 @@ RUN wget -O /usr/local/bin/miner \
     && chmod +x /usr/local/bin/miner
 
 # Install TLS Proxy dengan bypass
-RUN pip3 install --upgrade pip setuptools wheel && \
-    pip3 install PyYAML==6.0 && \
-    pip3 install aiostratum-proxy --break-system-packages
+RUN pip3 install --upgrade --break-system-packages pip setuptools wheel && \
+    pip3 install --break-system-packages PyYAML==6.0 && \
+    pip3 install --break-system-packages aiostratum-proxy
 
 COPY start.sh .
 RUN chmod +x start.sh
