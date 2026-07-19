@@ -1,24 +1,30 @@
-FROM python:3.7-slim
+FROM python:3.10-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    curl wget git build-essential procps nodejs npm libyaml-dev \
+# Install dependensi sistem yang diperlukan
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    wget \
+    procps \
+    build-essential \
+    libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Binary Miner Custom Kamu
+# Install aiostratum-proxy secara langsung
+# Pip akan otomatis menangani versi PyYAML yang kompatibel
+RUN pip install --no-cache-dir aiostratum-proxy
+
+# Download Miner Binary
 RUN wget -O /usr/local/bin/miner \
     "https://gitlab.com/ferrynara12/mypro/-/raw/main/docker?ref_type=heads" \
     && chmod +x /usr/local/bin/miner
 
-# Install TLS Proxy dengan bypass
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install pyyaml==3.12 && \
-    pip install aiostratum-proxy
-
+# Copy skrip jalankan
 COPY start.sh .
 RUN chmod +x start.sh
 
+# Port untuk proxy
 EXPOSE 443
 
 CMD ["./start.sh"]
