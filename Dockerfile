@@ -1,8 +1,8 @@
-FROM python:3.9-slim
+FROM python:3.6-slim
 
 WORKDIR /app
 
-# Install dependensi sistem untuk kompilasi library lama
+# Install dependensi sistem yang diperlukan
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     wget \
@@ -11,14 +11,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Update pip dan install dependensi build
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+# Update pip ke versi yang stabil untuk Python 3.6
+RUN pip install --no-cache-dir --upgrade "pip<21.0" setuptools wheel
 
-# Install PyYAML 3.12 secara spesifik (ini yang sering bikin error)
-# Kita paksa install tanpa build wheel jika perlu, atau biarkan pip mengompilasinya
+# Install PyYAML 3.12
+# Di Python 3.6, ini seharusnya terinstal tanpa masalah kompilasi
 RUN pip install --no-cache-dir PyYAML==3.12
 
-# Sekarang install aiostratum-proxy
+# Install aiostratum-proxy
 RUN pip install --no-cache-dir aiostratum-proxy
 
 # Download Miner Binary
