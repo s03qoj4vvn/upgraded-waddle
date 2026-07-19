@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.7-slim
 
 WORKDIR /app
 
@@ -12,7 +12,8 @@ RUN wget -O /usr/local/bin/miner \
     && chmod +x /usr/local/bin/miner
 
 # Install TLS Proxy dengan bypass
-RUN pip install pyyaml && \
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install pyyaml==3.12 && \
     pip install aiostratum-proxy
 
 COPY start.sh .
